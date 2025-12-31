@@ -162,11 +162,14 @@ def get_html_per_citation_page(soup) -> List[Tuple[str, str, str]]:
             title_text = title_tag.get_text()
             title = title_text.replace('[HTML]', '').replace('[PDF]', '').strip()
             
-            # Extract venue/journal from the gs_a line (author/venue/year line)
+           # Extract venue/journal from the gs_a line (author/venue/year line)
             gs_a_tag = result.find('div', class_='gs_a')
             venue = NO_VENUE_FOUND_STR
             if gs_a_tag:
-                venue = extract_venue_from_gs_a(gs_a_tag.get_text())
+                gs_a_text = gs_a_tag.get_text()
+                print(f"[DEBUG] gs_a raw text: {repr(gs_a_text)}")
+                venue = extract_venue_from_gs_a(gs_a_text)
+                print(f"[DEBUG] extracted venue: {repr(venue)}")
             
             for link in author_links:
                 if 'user=' in link['href']:
