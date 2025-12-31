@@ -91,7 +91,10 @@ def extract_venue_from_gs_a(gs_a_text: str) -> str:
     '''
     if not gs_a_text:
         return NO_VENUE_FOUND_STR
-    
+
+    # Normalize non-breaking spaces to regular spaces
+    gs_a_text = gs_a_text.replace('\xa0', ' ')
+
     # Split by " - " to separate components
     parts = gs_a_text.split(' - ')
     
